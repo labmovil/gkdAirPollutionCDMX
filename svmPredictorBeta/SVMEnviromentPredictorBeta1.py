@@ -5,7 +5,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import precision_score,accuracy_score
 import numpy as np
 
-dfTraining = pd.read_csv("DataSetTesting.csv")
+dfTraining = pd.read_csv("DataSetTraining.csv")
 dfTesting = pd.read_csv("DataSetTesting.csv")
 
  
@@ -33,6 +33,19 @@ for element in res1:
     error=(abs((element-y_testing[index]))/y_testing[index])*100
     print('Predicted Value: ', element, ' Real value: ', y_testing[index], " % Error: ", error)
     index=index+1
+    
+import csv
+pathCsvfile="./outRealTesting1.csv"
+with open(pathCsvfile, 'w', encoding='utf-8', newline='') as csvFile:
+    fieldnames = ['predictedValue', 'RealValue','ErrorPercent']
+    writer = csv.DictWriter(csvFile, fieldnames=fieldnames) 
+    writer.writeheader() 
+    index=0
+    for element in res1:
+        error=(abs((element-y_testing[index]))/y_testing[index])*100
+        print('Predicted Value: ', element, ' Real value: ', y_testing[index], " % Error: ", error)
+        writer.writerow({'predictedValue': "'"+format(element)+"'", 'RealValue': "'"+format(y_testing[index])+"'", 'ErrorPercent': "'"+format(error)+"'"})
+        index=index+1
 print("---------------------------------------------")
 
 
@@ -58,6 +71,15 @@ for element in res2:
     index=index+1
 print("---------------------------------------------")
 
-
-
-
+import csv
+pathCsvfile="./outRealTesting2.csv"
+with open(pathCsvfile, 'w', encoding='utf-8', newline='') as csvFile:
+    fieldnames = ['predictedValue', 'RealValue','ErrorPercent']
+    writer = csv.DictWriter(csvFile, fieldnames=fieldnames) 
+    writer.writeheader() 
+    index=0
+    for element in res2:
+        error=(abs((element-y_testing[index]))/y_testing[index])*100
+        print('Predicted Value: ', element, ' Real value: ', y_testing[index], " % Error: ", error)
+        writer.writerow({'predictedValue': "'"+format(element)+"'", 'RealValue': "'"+format(y_testing[index])+"'", 'ErrorPercent': "'"+format(error)+"'"})
+        index=index+1
